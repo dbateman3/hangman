@@ -6,9 +6,8 @@ def get_secret_word
 end
 
 def guess_count_down(guesses)
-	guess_count = guesses - 1
-	puts "You have #{guess_count} incorrect guesses left"
-	return guess_count
+	guesses -= 1
+	return guesses
 end
 
 incorrect_characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o",
@@ -16,12 +15,17 @@ incorrect_characters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "
 
 secret_word = get_secret_word
 
-puts secret_word
+hidden = secret_word.gsub(/./, "_ ")
 
-temp_secret_word = secret_word
+puts hidden
 
-puts "Enter a letter:"
-guess = gets.chomp
+temp_secret_word = secret_word.clone
+
+guesses_left = 6
+
+while guesses_left > 0 
+	puts "Enter a letter:"
+	guess = gets.chomp
 
 	if secret_word.include?(guess) == true
 		puts "Correct!"
@@ -29,6 +33,15 @@ guess = gets.chomp
 			if character == guess
 				incorrect_characters.delete(character)
 			end
+		end
+		guess = guess
+	else
+		puts "Incorrect!"
+		guesses_left = guess_count_down(guesses_left)
+		if guesses_left > 0
+			puts "You have #{guesses_left} incorrect guess(s) left"
+		else
+			puts "GAME OVER!"
 		end
 	end
 
@@ -38,4 +51,5 @@ guess = gets.chomp
 
 	puts temp_secret_word
 
-	temp_secret_word = secret_word
+	temp_secret_word = secret_word.clone
+end

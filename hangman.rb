@@ -17,8 +17,6 @@ secret_word = get_secret_word
 
 hidden = secret_word.gsub(/./, "_ ")
 
-puts secret_word
-
 puts hidden
 
 temp_secret_word = secret_word.clone
